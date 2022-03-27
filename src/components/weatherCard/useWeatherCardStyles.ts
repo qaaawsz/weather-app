@@ -12,7 +12,7 @@ const useWeatherCardStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         maxWidth: 400,
         width: '100%',
-        margin: '20px 10px',
+        margin: 20,
         textAlign: 'center',
         background: GRAY_LIGHT,
         color: GRAY_TEXT_DARK,

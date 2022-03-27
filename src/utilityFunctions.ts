@@ -30,7 +30,7 @@ export const searchByGeolocation = async (dispatch: Function) => {
     dispatch(startLoading())
     dispatch(defineFirstLaunch())
 
-    const successCb = async (position: any) => {
+    const geolocationSearch = async (position: any) => {
         const {Key, LocalizedName} = await fetchUserLocation(position.coords.latitude, position.coords.longitude)
         const response = await fetchCityData(Key)
 
@@ -45,12 +45,13 @@ export const searchByGeolocation = async (dispatch: Function) => {
         dispatch(stopLoading())
     }
 
-    const errorCb = (error: any) => {
+    const defaultSearch = async (error: any) => {
         console.log(error)
+        await searchForCity(dispatch, 'Tel Aviv')
         dispatch(stopLoading())
     }
 
-    navigator.geolocation.getCurrentPosition(successCb, errorCb)
+    navigator.geolocation.getCurrentPosition(geolocationSearch, defaultSearch)
 }
 
 const cToF = (celsius: number) => Number((celsius * 9 / 5 + 32).toFixed(1))

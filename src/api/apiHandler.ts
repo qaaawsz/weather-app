@@ -1,6 +1,6 @@
 import {checkForEmpty} from '../utilityFunctions'
 
-const API = 'm3lIdhjystxvR9nGScvSZ2HR7HIjIZam'
+const API = 'd41AApE0BFkN5wkLrayVtZG1hkbRucDO'
 const REQUEST = 'https://dataservice.accuweather.com/'
 
 export const fetchUserLocation = async (lat: number, long: number) =>

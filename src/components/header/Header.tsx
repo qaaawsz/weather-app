@@ -69,6 +69,7 @@ const Header: React.FC = () => {
                     className={classes.headerForm}
                     onSubmit={onSubmit}>
                     <TextField
+                        style={{paddingLeft: 5}}
                         className={clsx(classes.searchBox, {
                             [classes.searchBoxDark]: nightMode,
                             [classes.inValid]: textFieldError
