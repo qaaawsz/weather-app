@@ -1,6 +1,6 @@
 import {checkForEmpty} from '../utilityFunctions'
 
-const API = 'd41AApE0BFkN5wkLrayVtZG1hkbRucDO'
+const API = process.env['REACT_APP_API_KEY']
 const REQUEST = 'https://dataservice.accuweather.com/'
 
 export const fetchUserLocation = async (lat: number, long: number) =>
@@ -10,7 +10,7 @@ export const fetchUserLocation = async (lat: number, long: number) =>
 export const fetchCityData = async (city: string | number) => {
     const cityKey = await fetchCityKey(city)
 
-    if(checkForEmpty(cityKey)) return undefined
+    if (checkForEmpty(cityKey)) return undefined
 
     const currentWeatherConditions = await fetchDataHandler(`${REQUEST}currentconditions/v1/${cityKey[0].Key}?apikey=${API}&language=en-us&details=true`)
     const fiveDaysForecast = await fetchDataHandler(`${REQUEST}forecasts/v1/daily/5day/${cityKey[0].Key}?apikey=${API}&language=en-us&metric=true`)

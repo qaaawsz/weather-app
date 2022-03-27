@@ -69,7 +69,6 @@ const Header: React.FC = () => {
                     className={classes.headerForm}
                     onSubmit={onSubmit}>
                     <TextField
-                        style={{paddingLeft: 5}}
                         className={clsx(classes.searchBox, {
                             [classes.searchBoxDark]: nightMode,
                             [classes.inValid]: textFieldError
@@ -87,10 +86,12 @@ const Header: React.FC = () => {
                         error={textFieldError}
                         helperText={
                             textFieldError &&
-                            <span style={{fontSize: '0.7rem', letterSpacing: 0}}>Letters & spaces allowed, min length 2, max length 50</span>
+                            <span className={classes.helperText}>
+                                Letters & spaces allowed, min length 2, max length 50
+                            </span>
                         }
                     />
-                    { screenSize > 500 &&
+                    {screenSize > 500 &&
                         <Button
                             className={clsx(classes.headerButton, {[classes.headerButtonDark]: nightMode})}
                             disabled={loading}

@@ -26,13 +26,18 @@ const useHeaderStyles = makeStyles((theme) => ({
         height: 32,
     },
     searchBox: {
+        paddingLeft: 5,
         color: GRAY_TEXT_DARK,
     },
     searchBoxDark: {
         color: GRAY_TEXT_LIGHT,
     },
     inValid: {
-        borderColor: 'red !important'
+        borderColor: 'red !important',
+    },
+    helperText: {
+        fontSize: '0.67rem',
+        letterSpacing: -0.5,
     },
     headerButton: {
         padding: '2.5px 0px',
