@@ -13,9 +13,6 @@ import {
     CLOSE_NOTIFICATION, SHOW_TEXTFIELD_ERROR,
 } from './actionTypes'
 
-// Reducer isn't too big to split it into different reducers and combine, but it can be performed if the app would be scaled
-// The same with actions creator
-
 // Adding global variable isn't a good practise but usually such fields are set on backend side
 let lastId = 0
 

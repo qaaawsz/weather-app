@@ -1,31 +1,31 @@
 import {makeStyles} from '@material-ui/core/styles'
 import {
-    GRAY_DARK, GRAY_LIGHT,
+    GRAY_DARK, GRAY_DARKER, GRAY_LIGHT, GRAY_LIGHTER,
     GRAY_TEXT_DARK, GRAY_TEXT_LIGHT
 } from '../../global/colorsPalette'
 
 const useHeaderStyles = makeStyles((theme) => ({
     header: {
-        height: 80,
-        padding: '15px 20px',
+        height: 70,
+        padding: 15,
         borderBottom: `1px solid ${GRAY_TEXT_DARK}`,
-        [theme.breakpoints.down('xs')]: {
-            padding: '15px 10px',
-        },
     },
     headerDark: {
         color: GRAY_TEXT_LIGHT,
         borderBottom: `1px solid ${GRAY_TEXT_LIGHT}`
     },
     headerForm: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
         maxWidth: 800,
         width: '100%',
-        height: 32,
+        height: 55,
+    },
+    inputWrapper: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        width: '100%',
     },
     searchBox: {
+        height: 55,
         paddingLeft: 5,
         color: GRAY_TEXT_DARK,
     },
@@ -77,6 +77,20 @@ const useHeaderStyles = makeStyles((theme) => ({
         '&:hover': {
             color: GRAY_LIGHT,
         },
+    },
+    suggestions: {
+        position: 'relative',
+        minWidth: '100%',
+        overflowY: 'auto',
+        zIndex: 9,
+        padding: '0px !important',
+        background: GRAY_TEXT_LIGHT,
+    },
+    suggestionsDark: {
+        background: GRAY_DARKER,
+    },
+    showSuggestions: {
+        height: 200,
     },
 }))
 

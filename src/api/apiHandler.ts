@@ -9,7 +9,6 @@ export const fetchUserLocation = async (lat: number, long: number) =>
 // Weather forecast and current weather are requested in one function to reduce amount of api calls by using mutual city key
 export const fetchCityData = async (city: string | number) => {
     const cityKey = await fetchCityKey(city)
-
     if (checkForEmpty(cityKey)) return undefined
 
     const currentWeatherConditions = await fetchDataHandler(`${REQUEST}currentconditions/v1/${cityKey[0].Key}?apikey=${API}&language=en-us&details=true`)
