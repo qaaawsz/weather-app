@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {GRAY_TEXT_LIGHT, GRAY_TEXT_DARK} from '../../global/colorsPalette'
 
 const useThemeSwitch = () => {
-    const {nightMode} = useSelector((store: any) => store.ui)
+    const {nightMode} = useSelector((store: any) => store.interface)
 
     const classes = makeStyles((theme) => ({
         lightMode: {

@@ -9,7 +9,7 @@ import {searchByGeolocation} from './utilityFunctions'
 import Notification from './components/notification/Notification'
 
 const App: React.FC = () => {
-    const {firstLaunch} = useSelector((state: any) => state.ui)
+    const {firstLaunch} = useSelector((state: any) => state.interface)
     const dispatch = useDispatch()
 
     firstLaunch && searchByGeolocation(dispatch)

@@ -8,8 +8,8 @@ import useThemeSwitch from '../../components/hooks/useThemeSwitch'
 import clsx from 'clsx'
 
 const FavoritePage: React.FC = () => {
-    const {favourites} = useSelector((state: any) => state)
-    const {loading} = useSelector((state: any) => state.ui)
+    const {favourites} = useSelector((state: any) => state.favourites)
+    const {loading} = useSelector((state: any) => state.interface)
     const {colorSwitcher} = useThemeSwitch()
 
     if (loading) return <Preloader/>

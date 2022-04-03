@@ -1,28 +1,27 @@
-import {
-    defineFirstLaunch,
-    setSearchRequest, showNotification,
-    startLoading,
-    stopLoading,
-    storeForecastResult,
-    storeSearchResult
-} from './redux/actionCreator'
+import {startLoading, stopLoading, defineFirstLaunch} from './redux/slices/interfaceSlice'
+import {showNotification} from './redux/slices/notificationSlice'
 import {fetchCityData, fetchUserLocation} from './api/apiHandler'
+import {setSearchRequest} from './redux/slices/searchSlice'
+import {storeCurrentWeather, storeForecast} from './redux/slices/weatherSlice'
 
 export const searchForCity = async (dispatch: Function, city: string) => {
     dispatch(startLoading())
     const response = await fetchCityData(city)
 
     if (!response) {
-        dispatch(setSearchRequest('', false))
+        dispatch(setSearchRequest({searchText: '', isValid: false}))
         dispatch(stopLoading())
-        dispatch(showNotification('error', 'Something went wrong, please try again'))
+        dispatch(showNotification({
+            type: 'error',
+            description: 'Something went wrong, please try again',
+        }))
         return
     }
 
-    dispatch(storeSearchResult(city, response.currentWeatherConditions[0]))
-    dispatch(storeForecastResult(response.fiveDaysForecast.DailyForecasts))
+    dispatch(storeCurrentWeather({cityName: city, weather: response.currentWeatherConditions[0]}))
+    dispatch(storeForecast(response.fiveDaysForecast.DailyForecasts))
 
-    dispatch(setSearchRequest('', false))
+    dispatch(setSearchRequest({searchText: '', isValid: false}))
     dispatch(stopLoading())
 }
 
@@ -39,8 +38,8 @@ export const searchByGeolocation = async (dispatch: Function) => {
             return
         }
 
-        dispatch(storeSearchResult(LocalizedName, response.currentWeatherConditions[0]))
-        dispatch(storeForecastResult(response.fiveDaysForecast.DailyForecasts))
+        dispatch(storeCurrentWeather({cityName: LocalizedName, weather: response.currentWeatherConditions[0]}))
+        dispatch(storeForecast(response.fiveDaysForecast.DailyForecasts))
 
         dispatch(stopLoading())
     }

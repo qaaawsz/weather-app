@@ -2,15 +2,17 @@ import {Card, CardActions, CardHeader, IconButton} from '@material-ui/core'
 import React from 'react'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import {useDispatch, useSelector} from 'react-redux'
-import {removeCity, showNotification} from '../../redux/actionCreator'
+import {showNotification} from '../../redux/slices/notificationSlice'
+
 import useFavoriteCardStyles from './useFavoriteCardStyles'
 import {FavouriteCardType} from '../../types/types'
 import {useNavigate} from 'react-router-dom'
 import clsx from 'clsx'
 import {searchForCity} from '../../utilityFunctions'
+import {removeCity} from '../../redux/slices/favouritesSlice'
 
 const FavouriteCard: React.FC<FavouriteCardType> = ({id, cityName}) => {
-    const {nightMode} = useSelector((store: any) => store.ui)
+    const {nightMode} = useSelector((store: any) => store.interface)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const classes = useFavoriteCardStyles()
@@ -27,8 +29,12 @@ const FavouriteCard: React.FC<FavouriteCardType> = ({id, cityName}) => {
             />
             <CardActions className={classes.cardBottom} disableSpacing>
                 <IconButton onClick={() => {
-                    dispatch(showNotification('success', 'City successfully removed from favourites'))
-                    dispatch(removeCity(id))
+                    dispatch(removeCity({id}))
+                    dispatch(showNotification({
+                        show: true,
+                        type: 'success',
+                        description: `City successfully removed from favourites`
+                    }))
                 }}>
                     <FavoriteIcon className={classes.icon}/>
                 </IconButton>

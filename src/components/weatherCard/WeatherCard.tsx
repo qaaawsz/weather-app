@@ -7,14 +7,18 @@ import {
 } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import useWeatherCardStyles from './useWeatherCardStyles'
-import {addCity, showNotification, switchTemperatureUnit} from '../../redux/actionCreator'
+
+import {showNotification} from '../../redux/slices/notificationSlice'
+import {toggleTemperatureUnit} from '../../redux/slices/interfaceSlice'
+
 import {useDispatch, useSelector} from 'react-redux'
 import DailyCard from '../dailyCard/DailyCard'
 import {DayForecastType} from '../../types/types'
 import clsx from 'clsx'
+import {addCity} from '../../redux/slices/favouritesSlice'
 
 const WeatherCard: React.FC = () => {
-    const {currentWeather, forecast, favourites, ui: {nightMode}} = useSelector((state: any) => state)
+    const {weather: {currentWeather, forecast}, favourites, interface: {nightMode}} = useSelector((state: any) => state)
 
     const {
         cityName, weather: {
@@ -24,14 +28,14 @@ const WeatherCard: React.FC = () => {
         }
     } = currentWeather
 
-    const {temperatureUnit} = useSelector((state: any) => state.ui)
+    const {temperatureUnit} = useSelector((state: any) => state.interface)
     const dispatch = useDispatch()
     const classes = useWeatherCardStyles()
 
     const fullDate = new Date(LocalObservationDateTime)
         .toLocaleString('default', {year: 'numeric', month: 'long', day: 'numeric', weekday: 'long'})
 
-    const isInFavourites = favourites.filter((city: any) => city.cityName === cityName)
+    const isInFavourites = favourites.favourites.filter((city: any) => city.cityName === cityName)
     const unit = temperatureUnit ? 'C' : 'F'
     const temperature = temperatureUnit ? Metric.Value : Imperial.Value
 
@@ -50,16 +54,21 @@ const WeatherCard: React.FC = () => {
                     <Typography variant="body2">&deg;C</Typography>
                     <Switch className={classes.switch} size="small" checked={!temperatureUnit}
                             onChange={() => {
-                                dispatch(switchTemperatureUnit(temperatureUnit))
-                                dispatch(showNotification('success', `Measure unit changed to ${!temperatureUnit ? 'C' : 'F'}`))
+                                dispatch(toggleTemperatureUnit())
+                                dispatch(showNotification({
+                                    type: 'success',
+                                    description: `Measure unit changed to ${!temperatureUnit ? 'C' : 'F'}`
+                                }))
                             }}
                     />
                     <Typography variant="body2">&deg;F</Typography>
                 </Box>
                 <IconButton className={classes.icon} onClick={() => {
-                    dispatch(addCity(cityName))
-                    dispatch(showNotification('success',
-                        `City successfully ${isInFavourites.length ? 'removed from' : 'saved to'} favourites`))
+                    dispatch(addCity({cityName}))
+                    dispatch(showNotification({
+                        type: 'success',
+                        description: `City successfully ${isInFavourites.length ? 'removed from' : 'saved to'} favourites`
+                    }))
                 }}>
                     <FavoriteIcon className={isInFavourites.length ? classes.saved : classes.unsaved}/>
                 </IconButton>

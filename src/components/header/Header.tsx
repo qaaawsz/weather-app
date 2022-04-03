@@ -5,7 +5,10 @@ import HomeIcon from '@material-ui/icons/Home'
 import {Link} from 'react-router-dom'
 import useHeaderStyles from './useHeaderStyles'
 import {useDispatch, useSelector} from 'react-redux'
-import {showNotification, switchMode} from '../../redux/actionCreator'
+
+import {toggleNightMode} from '../../redux/slices/interfaceSlice'
+import {showNotification} from '../../redux/slices/notificationSlice'
+
 import Brightness7Icon from '@material-ui/icons/Brightness7'
 import Brightness4Icon from '@material-ui/icons/Brightness4'
 import {themes, ThemeContext} from '../../theme/appTheme'
@@ -13,14 +16,17 @@ import clsx from 'clsx'
 import AutoComplete from '../autoComplete/AutoComplete'
 
 const Header: React.FC = () => {
-    const {nightMode} = useSelector((store: any) => store.ui)
+    const {nightMode} = useSelector((store: any) => store.interface)
     const dispatch = useDispatch()
     const classes = useHeaderStyles()
 
     const onModeChange = (changeTheme: Function) => {
-        dispatch(switchMode(nightMode))
+        dispatch(toggleNightMode())
         changeTheme(nightMode ? themes.light : themes.dark)
-        dispatch(showNotification('success', `Dark mode ${nightMode ? 'disabled' : 'enabled'}`))
+        dispatch(showNotification({
+            type: 'success',
+            description: `Dark mode ${nightMode ? 'disabled' : 'enabled'}`
+        }))
     }
 
     return (

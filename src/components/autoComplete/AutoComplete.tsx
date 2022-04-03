@@ -1,7 +1,10 @@
 import React from 'react'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import useHeaderStyles from '../header/useHeaderStyles'
-import {setSearchRequest, showTextFieldError} from '../../redux/actionCreator'
+
+import {showTextFieldError} from '../../redux/slices/searchSlice'
+import {setSearchRequest} from '../../redux/slices/searchSlice'
+
 import {searchForCity} from '../../utilityFunctions'
 import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
@@ -9,8 +12,8 @@ import {List, ListItem, ListItemText, TextField} from '@material-ui/core'
 import clsx from 'clsx'
 
 const AutoComplete: React.FC = () => {
-    const {loading: inputLoading, nightMode} = useSelector((store: any) => store.ui)
-    const {searchText, textFieldError} = useSelector((store: any) => store.currentSearch)
+    const {loading: inputLoading, nightMode} = useSelector((store: any) => store.interface)
+    const {searchText, textFieldError} = useSelector((store: any) => store.search)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const cityNamePattern = /^\S[A-Za-z\s,]{1,100}$/
@@ -18,16 +21,18 @@ const AutoComplete: React.FC = () => {
     const classes = useHeaderStyles()
 
     const handleChange = (searchText: string) => {
-        dispatch(setSearchRequest(searchText, cityNamePattern.test(searchText)))
-        dispatch(showTextFieldError(false))
+        dispatch(setSearchRequest(
+            {searchText, isValid: cityNamePattern.test(searchText)}
+        ))
+        dispatch(showTextFieldError({textFieldError: false}))
     }
 
     const handleSubmit = (city: string) => {
-        dispatch(setSearchRequest(city, cityNamePattern.test(city)))
         if (!cityNamePattern.test(city)) {
-            dispatch(showTextFieldError(true))
+            dispatch(showTextFieldError({textFieldError: true}))
             return
         }
+        dispatch(setSearchRequest({searchText: city, isValid: cityNamePattern.test(city)}))
         navigate('/')
         !inputLoading && searchForCity(dispatch, city)
     }

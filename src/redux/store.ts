@@ -1,14 +1,17 @@
-import {compose, createStore} from 'redux'
-import {reducer} from './reducer'
+import {configureStore} from '@reduxjs/toolkit'
+import interfaceSlice from './slices/interfaceSlice'
+import weatherSlice from './slices/weatherSlice'
+import notificationSlice from './slices/notificationSlice'
+import favouritesSlice from './slices/favouritesSlice'
+import searchSlice from './slices/searchSlice'
 
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+
+export default configureStore({
+    reducer: {
+        weather: weatherSlice,
+        favourites: favouritesSlice,
+        interface: interfaceSlice,
+        notification: notificationSlice,
+        search: searchSlice,
     }
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
-const store = createStore(reducer, compose(composeEnhancers()))
-
-export default store
+})

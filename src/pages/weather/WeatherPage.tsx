@@ -8,7 +8,7 @@ import useThemeSwitch from '../../components/hooks/useThemeSwitch'
 import clsx from 'clsx'
 
 const WeatherPage: React.FC = () => {
-    const {currentWeather, forecast, ui: {loading}} = useSelector((state: any) => state)
+    const {weather: {currentWeather, forecast}, interface: {loading}} = useSelector((state: any) => state)
     const {colorSwitcher} = useThemeSwitch()
 
     if (loading) return <Preloader/>

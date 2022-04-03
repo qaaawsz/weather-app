@@ -2,7 +2,7 @@ import {Snackbar} from '@material-ui/core'
 import {Alert} from '@material-ui/lab'
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {closeNotification} from '../../redux/actionCreator'
+import {closeNotification} from '../../redux/slices/notificationSlice'
 
 const Notification: React.FC = () => {
     const {show, type, description} = useSelector((state: any) => state.notification)
