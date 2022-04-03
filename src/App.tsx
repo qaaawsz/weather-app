@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import FavoritePage from './pages/favorite/FavoritePage'
 import WeatherPage from './pages/weather/WeatherPage'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
@@ -11,6 +11,8 @@ import clsx from 'clsx'
 import useThemeSwitch from './components/hooks/useThemeSwitch'
 import useWindowSize from './components/hooks/useWindowSize'
 import {Box} from '@material-ui/core'
+import {setSearchRequest, showTextFieldError} from './redux/slices/searchSlice'
+import {closeNotification} from './redux/slices/notificationSlice'
 
 const App: React.FC = () => {
     const {height} = useWindowSize()
@@ -19,6 +21,23 @@ const App: React.FC = () => {
     const dispatch = useDispatch()
 
     firstLaunch && searchByGeolocation(dispatch)
+
+    // useEffect cleanup here exists to check when user closes tab and reset search and notifications in case some data left there
+    useEffect(() => {
+        const cleanup = () => {
+            dispatch(setSearchRequest(
+                {searchText: '', isValid: 'false'}
+            ))
+            dispatch(showTextFieldError({textFieldError: false}))
+            dispatch(closeNotification())
+        }
+
+        window.addEventListener('beforeunload', cleanup)
+
+        return () => {
+            window.removeEventListener('beforeunload', cleanup)
+        }
+    }, [])
 
     return (
         <Box

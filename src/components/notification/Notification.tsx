@@ -8,11 +8,16 @@ const Notification: React.FC = () => {
     const {show, type, description} = useSelector((state: any) => state.notification)
     const dispatch = useDispatch()
 
+    //Cleanup function added in case user will trigger a lot of notifications in a short period of time
     useEffect(() => {
+        let notification: ReturnType<typeof setTimeout>
         if (show) {
-            setTimeout(() => {
+            notification = setTimeout(() => {
                 dispatch(closeNotification())
-            }, 2000)
+            }, 1000)
+        }
+        return () => {
+            clearTimeout(notification)
         }
     }, [show])
 

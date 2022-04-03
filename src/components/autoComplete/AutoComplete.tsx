@@ -73,7 +73,11 @@ const AutoComplete: React.FC = () => {
                         {loading && <div>Loading...</div>}
                         {suggestions.map(suggestion => {
                             return (
-                                <ListItem {...getSuggestionItemProps(suggestion)} button>
+                                <ListItem
+                                    {...getSuggestionItemProps(suggestion)}
+                                    key={suggestion.placeId}
+                                    button
+                                >
                                     <ListItemText primary={suggestion.description}/>
                                 </ListItem>
                             )

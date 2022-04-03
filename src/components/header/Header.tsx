@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Grid, IconButton} from '@material-ui/core'
 import BookmarkIcon from '@material-ui/icons/Bookmark'
 import HomeIcon from '@material-ui/icons/Home'
