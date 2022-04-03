@@ -1,10 +1,8 @@
 import React from 'react'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import useHeaderStyles from '../header/useHeaderStyles'
-
 import {showTextFieldError} from '../../redux/slices/searchSlice'
 import {setSearchRequest} from '../../redux/slices/searchSlice'
-
 import {searchForCity} from '../../utilityFunctions'
 import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'

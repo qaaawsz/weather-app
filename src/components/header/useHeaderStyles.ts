@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 import {
-    GRAY_DARK, GRAY_DARKER, GRAY_LIGHT, GRAY_LIGHTER,
+    GRAY_DARK, GRAY_DARKER, GRAY_LIGHT,
     GRAY_TEXT_DARK, GRAY_TEXT_LIGHT
 } from '../../global/colorsPalette'
 

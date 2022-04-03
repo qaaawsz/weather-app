@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Grid, IconButton} from '@material-ui/core'
 import BookmarkIcon from '@material-ui/icons/Bookmark'
 import HomeIcon from '@material-ui/icons/Home'
@@ -11,7 +11,6 @@ import {showNotification} from '../../redux/slices/notificationSlice'
 
 import Brightness7Icon from '@material-ui/icons/Brightness7'
 import Brightness4Icon from '@material-ui/icons/Brightness4'
-import {themes, ThemeContext} from '../../theme/appTheme'
 import clsx from 'clsx'
 import AutoComplete from '../autoComplete/AutoComplete'
 
@@ -20,9 +19,8 @@ const Header: React.FC = () => {
     const dispatch = useDispatch()
     const classes = useHeaderStyles()
 
-    const onModeChange = (changeTheme: Function) => {
+    const onModeChange = () => {
         dispatch(toggleNightMode())
-        changeTheme(nightMode ? themes.light : themes.dark)
         dispatch(showNotification({
             type: 'success',
             description: `Dark mode ${nightMode ? 'disabled' : 'enabled'}`
@@ -32,20 +30,16 @@ const Header: React.FC = () => {
     return (
         <Grid className={clsx(classes.header, {[classes.headerDark]: nightMode})} container alignItems="center">
             <Grid container item xs={1}>
-                <ThemeContext.Consumer>
-                    {({changeTheme}) => (
-                        <IconButton
-                            className={clsx(classes.icon, {[classes.iconDark]: nightMode})}
-                            onClick={() => onModeChange(changeTheme)}
-                        >
-                            {
-                                nightMode
-                                    ? <Brightness7Icon className={clsx(classes.icon, {[classes.iconDark]: nightMode})}/>
-                                    : <Brightness4Icon className={clsx(classes.icon, {[classes.iconDark]: nightMode})}/>
-                            }
-                        </IconButton>
-                    )}
-                </ThemeContext.Consumer>
+                <IconButton
+                    className={clsx(classes.icon, {[classes.iconDark]: nightMode})}
+                    onClick={() => onModeChange()}
+                >
+                    {
+                        nightMode
+                            ? <Brightness7Icon className={clsx(classes.icon, {[classes.iconDark]: nightMode})}/>
+                            : <Brightness4Icon className={clsx(classes.icon, {[classes.iconDark]: nightMode})}/>
+                    }
+                </IconButton>
             </Grid>
             <Grid container item xs={9} justifyContent="center" alignItems="flex-start">
                 <AutoComplete/>

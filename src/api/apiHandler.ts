@@ -1,7 +1,7 @@
 import {checkForEmpty} from '../utilityFunctions'
 
 const API = process.env['REACT_APP_API_KEY']
-const REQUEST = 'https://dataservice.accuweather.com/'
+const REQUEST = 'http://dataservice.accuweather.com/'
 
 export const fetchUserLocation = async (lat: number, long: number) =>
     fetchDataHandler(`${REQUEST}locations/v1/cities/geoposition/search?apikey=${API}&q=${lat},${long}&language=en-us`)
