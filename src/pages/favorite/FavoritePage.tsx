@@ -15,7 +15,7 @@ const FavoritePage: React.FC = () => {
     if (loading) return <Preloader/>
 
     if (!favourites.length) return (
-        <Box className={clsx(colorSwitcher())} my={3} textAlign="center">
+        <Box className={clsx(colorSwitcher())} style={{overflowX:'hidden'}} my={3} textAlign="center">
             <Typography variant="h6">
                 You haven't added any cities to favourite yet
             </Typography>
