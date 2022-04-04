@@ -7,17 +7,11 @@ import Header from './components/header/Header'
 import {useDispatch, useSelector} from 'react-redux'
 import {searchByGeolocation} from './utilityFunctions'
 import Notification from './components/notification/Notification'
-import clsx from 'clsx'
-import useThemeSwitch from './components/hooks/useThemeSwitch'
-import useWindowSize from './components/hooks/useWindowSize'
-import {Box} from '@material-ui/core'
 import {setSearchRequest, showTextFieldError} from './redux/slices/searchSlice'
 import {closeNotification} from './redux/slices/notificationSlice'
 
 const App: React.FC = () => {
-    const {height} = useWindowSize()
     const {firstLaunch} = useSelector((state: any) => state.interface)
-    const {colorSwitcher} = useThemeSwitch()
     const dispatch = useDispatch()
 
     firstLaunch && searchByGeolocation(dispatch)
@@ -40,23 +34,15 @@ const App: React.FC = () => {
     }, [])
 
     return (
-        <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            style={{height: height}}
-            className={clsx(colorSwitcher())}
-        >
-            <Router>
-                <Header/>
-                <Notification/>
-                <Routes>
-                    <Route path="/" element={<WeatherPage/>}/>
-                    <Route path="/favourite" element={<FavoritePage/>}/>
-                    <Route path="*" element={<ErrorPage/>}/>
-                </Routes>
-            </Router>
-        </Box>
+        <Router>
+            <Header/>
+            <Notification/>
+            <Routes>
+                <Route path="/" element={<WeatherPage/>}/>
+                <Route path="/favourite" element={<FavoritePage/>}/>
+                <Route path="*" element={<ErrorPage/>}/>
+            </Routes>
+        </Router>
     )
 }
 

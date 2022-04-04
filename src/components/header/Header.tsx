@@ -1,26 +1,31 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Grid, IconButton} from '@material-ui/core'
 import BookmarkIcon from '@material-ui/icons/Bookmark'
 import HomeIcon from '@material-ui/icons/Home'
 import {Link} from 'react-router-dom'
 import useHeaderStyles from './useHeaderStyles'
 import {useDispatch, useSelector} from 'react-redux'
-
 import {toggleNightMode} from '../../redux/slices/interfaceSlice'
 import {showNotification} from '../../redux/slices/notificationSlice'
-
 import Brightness7Icon from '@material-ui/icons/Brightness7'
 import Brightness4Icon from '@material-ui/icons/Brightness4'
 import clsx from 'clsx'
 import AutoComplete from '../autoComplete/AutoComplete'
+import {themes, ThemeContext} from '../../theme/appTheme'
 
 const Header: React.FC = () => {
+    const {theme, changeTheme} = useContext(ThemeContext)
     const {nightMode} = useSelector((store: any) => store.interface)
     const dispatch = useDispatch()
     const classes = useHeaderStyles()
 
+    useEffect(() => {
+        nightMode && changeTheme(themes.dark)
+    }, [])
+
     const onModeChange = () => {
         dispatch(toggleNightMode())
+        changeTheme(nightMode ? themes.light : themes.dark)
         dispatch(showNotification({
             type: 'success',
             description: `Dark mode ${nightMode ? 'disabled' : 'enabled'}`

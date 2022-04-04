@@ -3,7 +3,6 @@ import React from 'react'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import {useDispatch, useSelector} from 'react-redux'
 import {showNotification} from '../../redux/slices/notificationSlice'
-
 import useFavoriteCardStyles from './useFavoriteCardStyles'
 import {FavouriteCardType} from '../../types/types'
 import {useNavigate} from 'react-router-dom'

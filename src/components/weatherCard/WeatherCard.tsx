@@ -7,10 +7,8 @@ import {
 } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import useWeatherCardStyles from './useWeatherCardStyles'
-
 import {showNotification} from '../../redux/slices/notificationSlice'
 import {toggleTemperatureUnit} from '../../redux/slices/interfaceSlice'
-
 import {useDispatch, useSelector} from 'react-redux'
 import DailyCard from '../dailyCard/DailyCard'
 import {DayForecastType} from '../../types/types'
