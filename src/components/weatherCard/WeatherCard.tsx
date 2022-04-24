@@ -45,29 +45,33 @@ const WeatherCard: React.FC = () => {
         ? Maximum.Metric.Value
         : Maximum.Imperial.Value
 
+    const onTemperatureToggle = () => {
+        dispatch(toggleTemperatureUnit())
+        dispatch(showNotification({
+            type: 'success',
+            description: `Measure unit changed to ${!temperatureUnit ? 'C' : 'F'}`
+        }))
+    }
+
+    const onFavoriteToggle = () => {
+        dispatch(addCity({cityName}))
+        dispatch(showNotification({
+            type: 'success',
+            description: `City successfully ${isInFavourites.length ? 'removed from' : 'saved to'} favourites`
+        }))
+    }
+
     return (
-        <Card className={clsx(classes.card, {[classes.cardDark]: nightMode})}>
+        <Card className={clsx(classes.card, {[classes.cardDark]: nightMode})} >
             <Box display="flex" justifyContent="space-between" p={1}>
                 <Box display="flex" alignItems="center">
                     <Typography variant="body2">&deg;C</Typography>
                     <Switch className={classes.switch} size="small" checked={!temperatureUnit}
-                            onChange={() => {
-                                dispatch(toggleTemperatureUnit())
-                                dispatch(showNotification({
-                                    type: 'success',
-                                    description: `Measure unit changed to ${!temperatureUnit ? 'C' : 'F'}`
-                                }))
-                            }}
+                            onChange={() => onTemperatureToggle()}
                     />
                     <Typography variant="body2">&deg;F</Typography>
                 </Box>
-                <IconButton className={classes.icon} onClick={() => {
-                    dispatch(addCity({cityName}))
-                    dispatch(showNotification({
-                        type: 'success',
-                        description: `City successfully ${isInFavourites.length ? 'removed from' : 'saved to'} favourites`
-                    }))
-                }}>
+                <IconButton className={classes.icon} onClick={() => onFavoriteToggle()}>
                     <FavoriteIcon className={isInFavourites.length ? classes.saved : classes.unsaved}/>
                 </IconButton>
             </Box>
